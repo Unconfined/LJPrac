@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Llama Jams</title>
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+</head>
+<body>
+
+  <form action="">
+    <input type="text" id="search">
+    <input type="submit" id="submit">
+  </form>
+  <div class="results"></div>
+  <div class="playlist"></div>
+
+<script src="http://connect.soundcloud.com/sdk-2.0.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script>
+SC.initialize({
+  client_id: '05eba237dc393dc1cd0b0302d74a521c'
+});
+
+var playlistName = 'Irving101';
+var newPlaylist = new Firebase("https://llamajams.firebaseio.com/" + playlistName);
+
+// This is the main search
+$('#submit').on('click', function(e){
+  var search = $('#search').val();
+  e.preventDefault();
+  $('.results').empty();
+
+  SC.get('http://api.soundcloud.com/tracks/', { q: search, limit: 10 }, function(tracks) {
+    // loop through the returned tracks
+    for(var i = 0; i < tracks.length; i++){
+      //display each title and attach a play button
+      $('.results').append('<div id="'+ tracks[i].uri +'">'+ tracks[i].title +'<button id="add">+</button></div>');
+    }
+    console.log(tracks);
+    });
+})
+
+// Adds the song to the playlist view and plays it
+$('body').on('click','button#add', function(e){
+  e.preventDefault();
+  console.log('add button has been clicked');
+  var $trackInfo = $(this).parent();
+  var $track = $(this).parent().attr("id");
+
+  SC.stream($track, function(sound){
+  sound.play();
+
+  newPlaylist.push({uri: $track});
+  
+});
+
+});
+</script>
+</body>
+</html>

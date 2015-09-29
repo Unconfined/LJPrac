@@ -1,0 +1,23 @@
+{
+  "name": "ljprac",
+  "version": "1.0.0",
+  "description": "practice using soundcloud API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unconfined/LJPrac.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Unconfined/LJPrac/issues"
+  },
+  "homepage": "https://github.com/Unconfined/LJPrac#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
